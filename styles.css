@@ -2,6 +2,7 @@
     border: 1px solid #eee;
     margin: 15px 0;
     padding: 15px;
+    position: relative;
 }
 
 .beverage-count {
@@ -43,5 +44,11 @@
     padding: 7px 15px;
     border: 2px solid orange;
     border-radius: 5px;
+}
+
+.remove-button {
+    position: absolute;
+    top: 40px;
+    right: 40px;
 }
 
