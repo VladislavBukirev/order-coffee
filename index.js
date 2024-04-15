@@ -21,6 +21,7 @@ document.querySelector(".add-button").addEventListener("click", () => {
 document.querySelector('.submit-button').addEventListener('click', (event) => {
     event.preventDefault();
     openModal();
+    updateModalTable();
 });
 
 document.querySelector('.close-model').addEventListener('click', () => {
@@ -48,5 +49,44 @@ function closeModal() {
     overlay.style.visibility = 'hidden';
 }
 
+let dict = {
+    'espresso': 'Эспрессо',
+    'capuccino': 'Капучино',
+    'cacao': 'Какао',
+    'usual' : 'Обычное',
+    'no-fat' : 'Обезжиренное',
+    'soy' : 'Соевое',
+    'coconut' : 'Кокосовое',
+}
 
+function updateModalTable() {
+    const beverages = [];
+    const fields = document.querySelectorAll('.beverage');
 
+    fields.forEach((field, index) => {
+        const beverageName = field.querySelector('select').value;
+        const milkType = field.querySelector('input[type="radio"]:checked').value;
+        const extras = [];
+        field.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
+            extras.push(checkbox.nextElementSibling.textContent);
+        });
+        beverages.push({
+            beverage: dict[beverageName],
+            milk: dict[milkType],
+            extras: extras.join(', ')
+        });
+    });
+
+    const modalTableBody = document.querySelector('.modal-table tbody');
+    modalTableBody.innerHTML = '';
+
+    beverages.forEach(beverage => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${beverage.beverage}</td>
+            <td>${beverage.milk}</td>
+            <td>${beverage.extras}</td>
+        `;
+        modalTableBody.appendChild(row);
+    });
+}
